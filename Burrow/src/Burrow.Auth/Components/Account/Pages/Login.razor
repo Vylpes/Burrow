@@ -1,0 +1,32 @@
+@page "/Account/Login"
+
+<PageTitle>Log in</PageTitle>
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="min-width: 520px; width: 100%; max-width: 540px;">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+            <StatusMessage Message="@errorMessage" />
+            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <InputText @bind-Value="Input.Email" id="email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <ValidationMessage For="() => Input.Email" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <InputText type="password" @bind-Value="Input.Password" id="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+                <button type="submit" class="w-100 btn btn-primary mb-3">Login</button>
+                <div class="d-flex gap-3">
+                    <a href="Account/ForgotPassword" class="text-muted small">Forgot Password?</a>
+                    <a href="Account/ResendEmailConfirmation" class="text-muted small">Didn't receive invite?</a>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,10 @@
+@inherits LayoutComponentBase
+
+@if (HttpContext is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @Body
+}

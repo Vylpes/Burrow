@@ -1,0 +1,21 @@
+@page "/Account/Manage/ResetAuthenticator"
+
+<PageTitle>Reset authenticator key</PageTitle>
+
+<div class="card">
+    <div class="card-header">Reset Authenticator Key</div>
+    <div class="card-body">
+        <StatusMessage />
+        <div class="alert alert-warning" role="alert">
+            <p><strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong></p>
+            <p>
+                This process disables 2FA until you verify your authenticator app.
+                If you do not complete your authenticator app configuration you may lose access to your account.
+            </p>
+        </div>
+        <form @formname="reset-authenticator" @onsubmit="OnSubmitAsync" method="post">
+            <AntiforgeryToken />
+            <button class="btn btn-danger" type="submit">Reset authenticator key</button>
+        </form>
+    </div>
+</div>

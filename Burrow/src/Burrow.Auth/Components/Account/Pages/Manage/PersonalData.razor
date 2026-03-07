@@ -1,0 +1,21 @@
+@page "/Account/Manage/PersonalData"
+
+<PageTitle>Personal Data</PageTitle>
+
+<div class="card">
+    <div class="card-header">Personal Data</div>
+    <div class="card-body">
+        <StatusMessage />
+        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+        <p>
+            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+        </p>
+        <div class="d-flex gap-2">
+            <form action="Account/Manage/DownloadPersonalData" method="post">
+                <AntiforgeryToken />
+                <button class="btn btn-primary" type="submit">Download</button>
+            </form>
+            <a href="Account/Manage/DeletePersonalData" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+@page "/Account/Register"
+
+<PageTitle>Register</PageTitle>
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="min-width: 520px; width: 100%; max-width: 540px;">
+        <div class="card-header">Register</div>
+        <div class="card-body">
+            <StatusMessage Message="@Message" />
+            <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <InputText @bind-Value="Input.Email" id="email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <ValidationMessage For="() => Input.Email" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <InputText type="password" @bind-Value="Input.Password" id="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <InputText type="password" @bind-Value="Input.ConfirmPassword" id="confirm-password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                </div>
+                <button type="submit" class="w-100 btn btn-primary">Register</button>
+            </EditForm>
+        </div>
+    </div>
+</div>

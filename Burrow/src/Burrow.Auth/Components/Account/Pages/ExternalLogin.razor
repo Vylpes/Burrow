@@ -1,0 +1,26 @@
+@page "/Account/ExternalLogin"
+
+<PageTitle>Register</PageTitle>
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="min-width: 520px; width: 100%; max-width: 540px;">
+        <div class="card-header">Register</div>
+        <div class="card-body">
+            <StatusMessage Message="@message" />
+            <div class="alert alert-info">
+                You've successfully authenticated with <strong>@ProviderDisplayName</strong>.
+                Please enter an email address for this site below and click the Register button to finish logging in.
+            </div>
+            <EditForm Model="Input" OnValidSubmit="OnValidSubmitAsync" FormName="confirmation" method="post">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <InputText @bind-Value="Input.Email" id="email" class="form-control" autocomplete="email" placeholder="Please enter your email." />
+                    <ValidationMessage For="() => Input.Email" />
+                </div>
+                <button type="submit" class="w-100 btn btn-primary">Register</button>
+            </EditForm>
+        </div>
+    </div>
+</div>

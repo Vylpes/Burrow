@@ -1,0 +1,26 @@
+@page "/Account/Manage/DeletePersonalData"
+
+<PageTitle>Delete Personal Data</PageTitle>
+
+<div class="card">
+    <div class="card-header text-danger">Delete Personal Data</div>
+    <div class="card-body">
+        <StatusMessage Message="@message" />
+        <div class="alert alert-warning" role="alert">
+            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+        </div>
+        <EditForm Model="Input" FormName="delete-user" OnValidSubmit="OnValidSubmitAsync" method="post">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert" />
+            @if (requirePassword)
+            {
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <InputText type="password" @bind-Value="Input.Password" id="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your password." />
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+            }
+            <button class="btn btn-danger" type="submit">Delete data and close my account</button>
+        </EditForm>
+    </div>
+</div>

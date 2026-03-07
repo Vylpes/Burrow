@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Example.Web/Example.Web.csproj" />
+  </Folder>
+  <Folder Name="/Burrow/src/">
+    <Project Path="Burrow/src/Burrow.Auth/Burrow.Auth.csproj" />
+  </Folder>
+  <Folder Name="/Burrow/tests/">
+    <Project Path="Burrow/tests/Burrow.Auth.Tests/Burrow.Auth.Tests.csproj" />
+  </Folder>
+</Solution>

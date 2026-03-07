@@ -1,0 +1,23 @@
+@page "/Account/RegisterConfirmation"
+
+<PageTitle>Register confirmation</PageTitle>
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="min-width: 520px; width: 100%; max-width: 540px;">
+        <div class="card-header">Register Confirmation</div>
+        <div class="card-body">
+            <StatusMessage Message="@statusMessage" />
+            @if (emailConfirmationLink is not null)
+            {
+                <p>
+                    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+                    Normally this would be emailed: <a href="@emailConfirmationLink">Click here to confirm your account</a>
+                </p>
+            }
+            else
+            {
+                <p>Please check your email to confirm your account.</p>
+            }
+        </div>
+    </div>
+</div>

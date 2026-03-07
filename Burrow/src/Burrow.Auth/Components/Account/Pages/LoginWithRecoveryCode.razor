@@ -1,0 +1,26 @@
+@page "/Account/LoginWithRecoveryCode"
+
+<PageTitle>Recovery code verification</PageTitle>
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="min-width: 520px; width: 100%; max-width: 540px;">
+        <div class="card-header">Recovery code verification</div>
+        <div class="card-body">
+            <StatusMessage Message="@message" />
+            <p>
+                You have requested to log in with a recovery code. This login will not be remembered until you provide
+                an authenticator app code at log in or disable 2FA and log in again.
+            </p>
+            <EditForm Model="Input" FormName="login-with-recovery-code" OnValidSubmit="OnValidSubmitAsync" method="post">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="mb-3">
+                    <label for="recovery-code" class="form-label">Recovery Code</label>
+                    <InputText @bind-Value="Input.RecoveryCode" id="recovery-code" class="form-control" autocomplete="off" placeholder="RecoveryCode" />
+                    <ValidationMessage For="() => Input.RecoveryCode" class="text-danger" />
+                </div>
+                <button type="submit" class="w-100 btn btn-primary">Log in</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
