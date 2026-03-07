@@ -19,7 +19,7 @@ public class SmtpSettings
     public string Password { get; set; } = string.Empty;
     public bool EnableSsl { get; set; } = true;
     public string FromAddress { get; set; } = string.Empty;
-    public string FromName { get; set; } = "Droplet";
+    public string FromName { get; set; } = string.Empty;
 }
 
 public class FileEmailSettings
