@@ -3,48 +3,72 @@ using Spectre.Console;
 
 namespace Burrow.Updater;
 
-class Program
+static class Program
 {
-    static async Task<int> Main(string[] args)
+    static int Main(string[] args)
     {
         var rootCommand = new RootCommand("Burrow Update Tool - Manage updates for Burrow template modules");
 
         // Check command
         var checkCommand = new Command("check", "Check for available Burrow updates");
-        checkCommand.SetHandler(CheckForUpdates);
-        rootCommand.AddCommand(checkCommand);
+        checkCommand.SetAction(_ => CheckForUpdates());
+        rootCommand.Subcommands.Add(checkCommand);
 
         // Diff command
         var diffCommand = new Command("diff", "Show differences between current and target version");
-        var versionOption = new Option<string?>("--version", "Target version to compare against (default: latest)");
-        diffCommand.AddOption(versionOption);
-        diffCommand.SetHandler(ShowDifferences, versionOption);
-        rootCommand.AddCommand(diffCommand);
+        var versionOption = new Option<string?>("--version")
+        {
+            Description = "Target version to compare against (default: latest)",
+        };
+        diffCommand.Options.Add(versionOption);
+        diffCommand.SetAction(parseResult => ShowDifferences(parseResult.GetValue(versionOption)));
+        rootCommand.Subcommands.Add(diffCommand);
 
         // Update command
         var updateCommand = new Command("update", "Apply Burrow updates");
-        var updateVersionOption = new Option<string?>("--version", "Version to update to (default: latest)");
-        var moduleOption = new Option<string?>("--module", "Update only specific module (e.g., Auth)");
-        var dryRunOption = new Option<bool>("--dry-run", getDefaultValue: () => false, description: "Show what would be updated without applying");
-        var forceOption = new Option<bool>("--force", getDefaultValue: () => false, description: "Prompt to overwrite modified files");
-        updateCommand.AddOption(updateVersionOption);
-        updateCommand.AddOption(moduleOption);
-        updateCommand.AddOption(dryRunOption);
-        updateCommand.AddOption(forceOption);
-        updateCommand.SetHandler(ApplyUpdate, updateVersionOption, moduleOption, dryRunOption, forceOption);
-        rootCommand.AddCommand(updateCommand);
+        var updateVersionOption = new Option<string?>("--version")
+        {
+            Description = "Version to update to (default: latest)",
+        };
+        var moduleOption = new Option<string?>("--module")
+        {
+            Description = "Update only specific module (e.g., Auth)",
+        };
+        var dryRunOption = new Option<bool>("--dry-run")
+        {
+            Description = "Show what would be updated without applying",
+            DefaultValueFactory = _ => false,
+        };
+        var forceOption = new Option<bool>("--force")
+        {
+            Description = "Prompt to overwrite modified files",
+            DefaultValueFactory = _ => false,
+        };
+        updateCommand.Options.Add(updateVersionOption);
+        updateCommand.Options.Add(moduleOption);
+        updateCommand.Options.Add(dryRunOption);
+        updateCommand.Options.Add(forceOption);
+        updateCommand.SetAction(parseResult => ApplyUpdate(
+            parseResult.GetValue(updateVersionOption),
+            parseResult.GetValue(moduleOption),
+            parseResult.GetValue(dryRunOption),
+            parseResult.GetValue(forceOption)));
+        rootCommand.Subcommands.Add(updateCommand);
 
         // Rollback command
         var rollbackCommand = new Command("rollback", "Restore from a backup");
-        var timestampOption = new Option<string?>("--timestamp", "Backup timestamp to restore (lists available if not provided)");
-        rollbackCommand.AddOption(timestampOption);
-        rollbackCommand.SetHandler(RollbackUpdate, timestampOption);
-        rootCommand.AddCommand(rollbackCommand);
+        var timestampOption = new Option<string?>("--timestamp")
+        {
+            Description = "Backup timestamp to restore (lists available if not provided)",
+        };
+        rollbackCommand.Options.Add(timestampOption);
+        rollbackCommand.SetAction(parseResult => RollbackUpdate(parseResult.GetValue(timestampOption)));
+        rootCommand.Subcommands.Add(rollbackCommand);
 
-        return await rootCommand.InvokeAsync(args);
+        return rootCommand.Parse(args).Invoke();
     }
 
-    static Task<int> CheckForUpdates()
+    static int CheckForUpdates()
     {
         AnsiConsole.MarkupLine("[bold blue]Burrow Update Tool v0.1.0[/]");
         AnsiConsole.WriteLine();
@@ -53,7 +77,7 @@ class Program
         if (!File.Exists(versionFile))
         {
             AnsiConsole.MarkupLine("[red]Error: Burrow/version.txt not found. Are you in a Burrow project root?[/]");
-            return Task.FromResult(1);
+            return 1;
         }
 
         var currentVersion = File.ReadAllText(versionFile).Trim();
@@ -72,13 +96,19 @@ class Program
             AnsiConsole.MarkupLine($"[yellow]Update available! Run 'burrow-updater diff' to see changes.[/]");
         }
 
-        return Task.FromResult(0);
+        return 0;
     }
 
-    static Task<int> ShowDifferences(string? version)
+    static int ShowDifferences(string? version)
     {
         AnsiConsole.MarkupLine("[bold]Showing differences...[/]");
         AnsiConsole.WriteLine();
+
+        if (!string.IsNullOrWhiteSpace(version))
+        {
+            AnsiConsole.MarkupLine($"[blue]Target version:[/] {version}");
+            AnsiConsole.WriteLine();
+        }
 
         // In a real implementation, this would download and compare manifests
         AnsiConsole.MarkupLine("[yellow]Note: This is a placeholder implementation.[/]");
@@ -88,15 +118,25 @@ class Program
         AnsiConsole.MarkupLine("  • Show added, modified, and deleted files");
         AnsiConsole.MarkupLine("  • Detect local customizations");
 
-        return Task.FromResult(0);
+        return 0;
     }
 
-    static Task<int> ApplyUpdate(string? version, string? module, bool dryRun, bool force)
+    static int ApplyUpdate(string? version, string? module, bool dryRun, bool force)
     {
         if (dryRun)
         {
             AnsiConsole.MarkupLine("[bold]Dry run mode - no files will be modified[/]");
             AnsiConsole.WriteLine();
+        }
+
+        if (!string.IsNullOrWhiteSpace(version))
+        {
+            AnsiConsole.MarkupLine($"[blue]Target version:[/] {version}");
+        }
+
+        if (force)
+        {
+            AnsiConsole.MarkupLine("[yellow]Force mode enabled:[/] modified files may be overwritten after prompts");
         }
 
         AnsiConsole.MarkupLine("[bold]Applying Burrow updates...[/]");
@@ -122,17 +162,17 @@ class Program
         AnsiConsole.MarkupLine("  • Update only safe files");
         AnsiConsole.MarkupLine("  • Prompt for conflicts if --force");
 
-        return Task.FromResult(0);
+        return 0;
     }
 
-    static Task<int> RollbackUpdate(string? timestamp)
+    static int RollbackUpdate(string? timestamp)
     {
         var backupDir = Path.Combine("Burrow", ".backup");
 
         if (!Directory.Exists(backupDir))
         {
             AnsiConsole.MarkupLine("[red]No backups found[/]");
-            return Task.FromResult(1);
+            return 1;
         }
 
         if (string.IsNullOrEmpty(timestamp))
@@ -156,6 +196,6 @@ class Program
             AnsiConsole.MarkupLine("[yellow]Note: This is a placeholder implementation.[/]");
         }
 
-        return Task.FromResult(0);
+        return 0;
     }
 }
