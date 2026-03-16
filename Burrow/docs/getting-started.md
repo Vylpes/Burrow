@@ -25,7 +25,7 @@ Optional (for Burrow template development):
    cd YOUR_PROJECT
    ```
 
-### Option B: Clone Direct ly
+### Option B: Clone Directly
 
 ```bash
 git clone https://github.com/Vylpes/burrow.git your-project-name

@@ -7,9 +7,6 @@ Burrow is designed with modularity at its core. This guide explains how to add, 
 | Module | Description | Status | Dependencies |
 |--------|-------------|--------|--------------|
 | **Burrow.Auth** | Authentication with ASP.NET Core Identity | ✅ Stable | PostgreSQL, EF Core |
-| Burrow.Core | Shared utilities (only if needed) | 💭 Planned | None |
-| Burrow.Payment | Payment processing | 💭 Future | To be determined |
-| Burrow.Messaging | Email templates & notifications | 💭 Future | To be determined |
 
 ## Understanding Modules
 

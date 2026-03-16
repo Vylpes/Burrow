@@ -35,7 +35,7 @@ echo "X.Y.Z" > Burrow/version.txt
 
 ### Strategy 1: Full Replacement (Recommended)
 
-**Best for**: Projects that haven't customized Burrow modules  
+**Best for**: Projects that haven't customized Burrow modules
 
 **Process**:
 1. Backup current `Burrow/` folder
@@ -77,7 +77,7 @@ Output: `0.1.0`
 
 ### 2. Check for Updates
 
-Visit the [Burrow releases page](https://github.com/Vylpes/burrow/releases) and note the latest version.
+Visit the [Burrow releases page](https://git.vylpes.xyz/RabbitLabs/Burrow/releases) and note the latest version.
 
 ### 3. Review Release Notes
 

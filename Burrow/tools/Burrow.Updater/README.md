@@ -8,7 +8,7 @@ The Burrow Updater is a .NET global tool designed to help downstream projects se
 
 ## Architecture
 
-See [/Burrow/docs/update-tool-architecture.md](../docs/update-tool-architecture.md) for the complete architectural design.
+See [/Burrow/docs/architecture/update-tool.md](../../docs/architecture/update-tool.md) for the complete architectural design.
 
 ## Current Implementation
 
