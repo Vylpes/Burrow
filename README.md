@@ -33,6 +33,7 @@ docker-compose up -d
 
 # 4. Configure connection string (if needed)
 # Edit src/Example.Web/appsettings.Development.json
+# Optional machine-specific overrides go in src/Example.Web/appsettings.$(uname -n).json
 
 # 5. Run the application
 dotnet run --project src/Example.Web
