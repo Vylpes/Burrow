@@ -18,14 +18,4 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
   </ItemGroup>
 
-  <Target Name="YarnInstall" BeforeTargets="BuildCss"
-          Inputs="$(MSBuildProjectDirectory)/package.json;$(MSBuildProjectDirectory)/yarn.lock"
-          Outputs="$(MSBuildProjectDirectory)/node_modules/.yarn-integrity">
-    <Exec Command="yarn install --frozen-lockfile" WorkingDirectory="$(MSBuildProjectDirectory)" />
-  </Target>
-
-  <Target Name="BuildCss" BeforeTargets="Build">
-    <Exec Command="yarn css:build" WorkingDirectory="$(MSBuildProjectDirectory)" />
-  </Target>
-
 </Project>

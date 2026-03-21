@@ -22,7 +22,7 @@ public class EmailSettingsTests
         Assert.Equal(string.Empty, settings.Smtp.Password);
         Assert.True(settings.Smtp.EnableSsl);
         Assert.Equal(string.Empty, settings.Smtp.FromAddress);
-        Assert.Equal("Droplet", settings.Smtp.FromName);
+        Assert.Equal(string.Empty, settings.Smtp.FromName);
     }
 
     [Fact]

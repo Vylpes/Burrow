@@ -46,6 +46,12 @@ public static class BurrowAuthExtensions
         switch (emailSettings.Sender.ToLowerInvariant())
         {
             case EmailSettings.SmtpSender:
+                if (string.IsNullOrWhiteSpace(emailSettings.Smtp.Host))
+                    throw new InvalidOperationException("SMTP Host is required when using SMTP email sender.");
+                if (string.IsNullOrWhiteSpace(emailSettings.Smtp.FromAddress))
+                    throw new InvalidOperationException("SMTP FromAddress is required when using SMTP email sender.");
+                if (string.IsNullOrWhiteSpace(emailSettings.Smtp.FromName))
+                    throw new InvalidOperationException("SMTP FromName is required when using SMTP email sender. Configure this in appsettings.json under Email:Smtp:FromName.");
                 services.AddSingleton<IEmailSender<ApplicationUser>>(
                     new SmtpEmailSender(emailSettings.Smtp));
                 break;
