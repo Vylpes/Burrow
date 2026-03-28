@@ -67,6 +67,8 @@ The default development configuration works out-of-the-box. To customize, edit `
 }
 ```
 
+For machine-specific overrides that should stay local, create `src/Example.Web/appsettings.{your-hostname}.json`. Burrow loads this file automatically after the standard environment-specific settings, and it is optional.
+
 ### Email Configuration
 
 By default, Burrow uses **file-based email** (emails saved to `.temp/emails/`). This is perfect for development.
